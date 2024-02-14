@@ -1,9 +1,17 @@
 {
   disko.devices = {
+    nodev."/" = {
+      fsType = "tmpfs";
+      mountOptions = [
+        "size=2G"
+        "defaults"
+        "mode=755"
+      ];
+    };
     disk = {
       main = {
         type = "disk";
-        device = "/dev/<...>";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
@@ -24,10 +32,6 @@
                 type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = {
-                  "@" = {
-                    mountpoint = "/";
-                    mountOptions = ["noatime" "compress=zstd" "discard=async"];
-                  };
                   "@nix" = {
                     mountpoint = "/nix";
                     mountOptions = [ "compress=zstd" "noatime" ];
@@ -36,30 +40,21 @@
                     mountpoint = "/home";
                     mountOptions = [ "compress=zstd" ];
                   };
-                  "@swap" = {
-                      mountpoint = "/.swap";
-                      mountOptions = ["noatime" "nodatacow" "nodatasum" "discard=async"];
-                      swap = {
-                        swap.size = "8G";
-                        swap.path = "swap";
-                      };
-                    };
+                  # "@swap" = {
+                  #     mountpoint = "/.swap";
+                  #     mountOptions = ["noatime" "nodatacow" "nodatasum" "discard=async"];
+                  #     swap = {
+                  #       swap.size = "8G";
+                  #       swap.path = "swap";
+                  #     };
+                  #   };
                 };
               };
-              mountpoint = "/partition-root";
             };
             # lvm = {};
           };
         };
       };
     };
-    # nodev."/" = {
-    #   fsType = "tmpfs";
-    #   mountOptions = [
-    #     "size=2G"
-    #     "defaults"
-    #     "mode=755"
-    #   ];
-    # };
   };
 }
