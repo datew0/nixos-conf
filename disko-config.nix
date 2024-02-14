@@ -1,5 +1,43 @@
 {
   disko.devices = {
+    disk.main = {
+      device = "/dev/nvme0n1";
+      type = "disk";
+      content = {
+        type = "gpt";
+        partitions = {
+          {
+            name = "ESP";
+            size = "1G";
+            type = "EF00";
+            priority = 0;
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+            };
+          }
+          {
+            size = "100G";
+            content = {
+              type = "btrfs";
+              mountpoint = "/";
+              mountOptions = ["noatime"];
+              subvolumes = {
+                "@home" = {
+                  mountOptions = [ "compress=zstd" ];
+                  mountpoint = "/home";
+                };
+                "@nix" = {
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                  mountpoint = "/nix";
+                };
+              };
+            };
+          };
+        };
+      };
+    };
     nodev."/" = {
       fsType = "tmpfs";
       mountOptions = [
@@ -7,54 +45,6 @@
         "defaults"
         "mode=755"
       ];
-    };
-    disk = {
-      main = {
-        type = "disk";
-        device = "/dev/nvme0n1";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              name = "ESP";
-              size = "1G";
-              type = "EF00";
-              priority = 0;
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
-            };
-            sys = {
-              size = "100G";
-              content = {
-                type = "btrfs";
-                extraArgs = [ "-f" ];
-                subvolumes = {
-                  "@nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "@home" = {
-                    mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  # "@swap" = {
-                  #     mountpoint = "/.swap";
-                  #     mountOptions = ["noatime" "nodatacow" "nodatasum" "discard=async"];
-                  #     swap = {
-                  #       swap.size = "8G";
-                  #       swap.path = "swap";
-                  #     };
-                  #   };
-                };
-              };
-            };
-            # lvm = {};
-          };
-        };
-      };
     };
   };
 }
