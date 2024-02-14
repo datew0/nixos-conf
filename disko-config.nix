@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        # device = "/dev/disk/by-id/some-disk-id";
+        device = "/dev/<...>";
         content = {
           type = "gpt";
           partitions = {
@@ -24,20 +24,20 @@
                 type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = {
-                  "@/nix" = {
+                  "@nix" = {
                     mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/nix";
                   };
-                  "@/home" = {
+                  "@home" = {
                     mountOptions = [ "compress=zstd" ];
                     mountpoint = "/home";
                   };
-                  "@/swap" = {
+                  "@swap" = {
                       mountpoint = "/.swap";
                       mountOptions = ["noatime" "nodatacow" "nodatasum" "discard=async"];
                       swap = {
-                        swap-0.size = "8G";
-                        swap-0.path = "swap-0";
+                        swap.size = "8G";
+                        swap.path = "swap";
                       };
                     };
                 };
