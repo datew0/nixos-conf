@@ -24,13 +24,17 @@
                 type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = {
+                  "@" = {
+                    mountpoint = "/";
+                    mountOptions = ["noatime" "compress=zstd" "discard=async"];
+                  };
                   "@nix" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/nix";
+                    mountOptions = [ "compress=zstd" "noatime" ];
                   };
                   "@home" = {
-                    mountOptions = [ "compress=zstd" ];
                     mountpoint = "/home";
+                    mountOptions = [ "compress=zstd" ];
                   };
                   "@swap" = {
                       mountpoint = "/.swap";
@@ -48,13 +52,13 @@
         };
       };
     };
-    nodev."/" = {
-      fsType = "tmpfs";
-      mountOptions = [
-        "size=2G"
-        "defaults"
-        "mode=755"
-      ];
-    };
+    # nodev."/" = {
+    #   fsType = "tmpfs";
+    #   mountOptions = [
+    #     "size=2G"
+    #     "defaults"
+    #     "mode=755"
+    #   ];
+    # };
   };
 }
