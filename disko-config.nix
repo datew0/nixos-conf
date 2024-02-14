@@ -6,7 +6,7 @@
       content = {
         type = "gpt";
         partitions = {
-          {
+          ESP = {
             name = "ESP";
             size = "1G";
             type = "EF00";
@@ -16,8 +16,8 @@
               format = "vfat";
               mountpoint = "/boot";
             };
-          }
-          {
+          };
+          system = {
             size = "100G";
             content = {
               type = "btrfs";
