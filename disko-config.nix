@@ -21,22 +21,20 @@
             size = "100G";
             content = {
               type = "btrfs";
-              mountpoint = "/";
-              mountOptions = [ "compress=zstd" "noatime" ];
               subvolumes = { 
-                  # "@" = {
-                  #   mountpoint = "/";
-                  #   mountOptions = [ "compress=zstd" "noatime" ];
-                  # };
-                  "home" = {
+                  "@" = {
+                    mountpoint = "/";
+                    mountOptions = [ "compress=zstd" "noatime" ];
+                  };
+                  "@home" = {
                     mountpoint = "/home";
                     mountOptions = [ "compress=zstd" ];
                   };
-                  "nix" = {
+                  "@nix" = {
                     mountpoint = "/nix";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "log" = {
+                  "@log" = {
                     mountpoint = "/var/log";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
