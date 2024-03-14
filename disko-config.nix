@@ -24,21 +24,16 @@
               mountpoint = "/";
               mountOptions = ["noatime"];
               subvolumes = { 
-                  "@" = { };
-                  "@/root" = {
+                  "@" = {
                     mountpoint = "/";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@/home" = {
+                  "@home" = {
                     mountpoint = "/home";
                     mountOptions = [ "compress=zstd" ];
                   };
-                  "@/nix" = {
+                  "@nix" = {
                     mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "@/persist" = {
-                    mountpoint = "/persist";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
                   "@/log" = {
