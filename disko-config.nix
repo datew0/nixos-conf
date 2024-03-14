@@ -21,8 +21,6 @@
             size = "100G";
             content = {
               type = "btrfs";
-              mountpoint = "/";
-              mountOptions = ["noatime"];
               subvolumes = { 
                   "@" = {
                     mountpoint = "/";
@@ -36,7 +34,7 @@
                     mountpoint = "/nix";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@/log" = {
+                  "@log" = {
                     mountpoint = "/var/log";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
