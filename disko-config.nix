@@ -22,22 +22,23 @@
             content = {
               type = "btrfs";
               subvolumes = { 
-                  "rootfs" = {
-                    mountpoint = "/";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "home" = {
-                    mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "log" = {
-                    mountpoint = "/var/log";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
+                "@" = { };
+                "@/root" = {
+                  mountpoint = "/";
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+                "@/home" = {
+                  mountpoint = "/home";
+                  mountOptions = [ "compress=zstd" ];
+                };
+                "@/nix" = {
+                  mountpoint = "/nix";
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+                "@/log" = {
+                  mountpoint = "/var/log";
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
               };
             };
           };
